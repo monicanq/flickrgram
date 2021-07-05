@@ -6,6 +6,7 @@ const useFetch = (url) =>  {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
 
+    
     useEffect(() => {
         //AbortController is not compatible with Internet explorer and it makes the app crash
         // const abortCont = new AbortController();

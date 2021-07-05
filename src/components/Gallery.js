@@ -1,27 +1,56 @@
 import apiKey from '../config/flickrKeys';
 import useFetch from '../hooks/useFetch';
 import PhotoCard from "./photocard";
-import { useEffect, useState } from 'react';
-
+import Loader from "./Loader";
+import { useState, useEffect } from 'react';
  
 const Gallery = ({tag}) => {
     
-    // Get list with all results from the search
-    const numImages = 6;
-    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${tag}&sort=relevance&safe_search=1&content_type=1&per_page=${numImages}&page=1&format=json&nojsoncallback=1`;
-    const { data, error } = useFetch(url);
-    const [display, setdisplay] = useState(3);
-    const increment = display;
+    const [list, setList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [preTag, setPreTag] = useState('');
+
+    const numImages = 10; //Number of images fetched per page
+    // let previousPage= 0; //Initialise the page number to 0 in order to 
+
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${tag}&sort=relevance&safe_search=1&content_type=1&per_page=${numImages}&page=${page}&format=json&nojsoncallback=1`;
+
+    const { data, isPending, error } = useFetch(url, page);
+
+    const fetchData = () =>{
+        if (data && tag === preTag){
+            setList([...list, ...data.photos.photo]);
+        }
+        if (data && tag !== preTag){
+            setList([...data.photos.photo]);
+        }
+        setPreTag(tag);
+    }
+    
+    useEffect(()=>{
+        fetchData();      
+    }, [data]);
+    
+    
+    //Function for infinite scroll
+    const isScrolling =()=>{
+        if(window.innerHeight + document.documentElement.scrollTop!==document.documentElement.offsetHeight){
+            return;
+        }
+        setPage(page+1);
+    }
+    useEffect(()=> {
+        window.addEventListener("scroll", isScrolling);
+        return () => window.removeEventListener("scroll", isScrolling);    
+    }, [isScrolling]);
 
     return ( 
-        <div className='container'>
+        <div className='container ie10up'>
             { error && <div> The photos cannot be fetched :( { error } </div>}
-            {data && data.photos.photo.map(photo => (
+            { isPending && <Loader /> }
+            {list.length > 0 && list.map(photo => (
                 <PhotoCard photo = { photo } key={ photo.id } />
             )) }
-
-            {data && <button>Load More</button>}
-
         </div>
      );
 }
