@@ -17,8 +17,8 @@ const PhotoCard = ({photo}) => {
     };
     // Populate the rest of the fields when we get the data from the last fetch
     if (data) {
-        image.author = data.photo.owner.realname;
-        image.desc = data.photo.description.content;
+        image.author = data.photo.owner.username;
+        image.desc = data.photo.description._content;
         image.tags = data.photo.tags.tag;
         image.url = data.photo.urls.url[0]._content;
 
