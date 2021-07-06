@@ -27,9 +27,6 @@ const Gallery = ({tag}) => {
         setPreTag(tag);
     }
     
-    // useEffect(()=>{
-    //     fetchData();      
-    // }, [data]);
     useEffect(()=>{
         fetchData();      
     },[data]);
