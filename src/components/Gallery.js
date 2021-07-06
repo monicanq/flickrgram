@@ -8,32 +8,24 @@ const Gallery = ({tag}) => {
     
     const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
-    const [preTag, setPreTag] = useState('');
 
     const numImages = 10; //Number of images fetched per page
-    // let previousPage= 0; //Initialise the page number to 0 in order to 
 
-    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${tag}&sort=relevance&safe_search=1&content_type=1&per_page=${numImages}&page=${page}&format=json&nojsoncallback=1`;
+    let url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${tag}&sort=relevance&safe_search=1&content_type=1&per_page=${numImages}&page=${page}&format=json&nojsoncallback=1`;
 
     const { data, isPending, error } = useFetch(url, page);
 
-    const fetchData = () =>{
-        if (data && tag === preTag){
-            setList([...list, ...data.photos.photo]);
-        }
-        if (data && tag !== preTag){
-            setList([...data.photos.photo]);
-        }
-        setPreTag(tag);
-    }
+    useEffect(() => {
+        setList([]);
+    }, [tag])
     
-    // useEffect(()=>{
-    //     fetchData();      
-    // }, [data]);
     useEffect(()=>{
-        fetchData();      
-    },[data]);
-    
+        let update =[];
+        if (data){
+            data.photos.photo.map(item => update.push(item))
+        }
+        setList(list => [...list, ...update])
+    }, [data])
     
     //Function for infinite scroll
     const isScrolling =()=>{
@@ -49,9 +41,10 @@ const Gallery = ({tag}) => {
 
     return ( 
         <div className='container ie10up'>
+            {console.log('list', list)}
             { error && <div> The photos cannot be fetched :( { error } </div>}
             { isPending && <Loader /> }
-            {list.length > 0 && list.map(photo => (
+            {list && list.map(photo => (
                 <PhotoCard photo = { photo } key={ photo.id } />
             )) }
         </div>
