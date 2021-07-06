@@ -1,7 +1,6 @@
 import Gallery from './components/Gallery';
 import Header from './components/Header';
 import Search from './components/Search';
-// import Test from './components/Test';
 import { useState } from 'react';
 
 
@@ -10,7 +9,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Test /> */}
       <Header />
       <Search setTag={ setTag }/>
       <Gallery tag={tag}/>
