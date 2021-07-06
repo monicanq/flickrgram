@@ -27,17 +27,17 @@ const Gallery = ({tag}) => {
         setList(list => [...list, ...update])
     }, [data])
     
-    //Function for infinite scroll
-    const isScrolling =()=>{
-        if(window.innerHeight + document.documentElement.scrollTop!==document.documentElement.offsetHeight){
-            return;
-        }
-        setPage(page+1);
-    }
     useEffect(()=> {
+        //Function for infinite scroll
+        const isScrolling =()=>{
+            if(window.innerHeight + document.documentElement.scrollTop!==document.documentElement.offsetHeight){
+                return;
+            }
+            setPage(page => page+1);
+        }
         window.addEventListener("scroll", isScrolling);
         return () => window.removeEventListener("scroll", isScrolling);    
-    }, [isScrolling]);
+    }, []);
 
     return ( 
         <div className='container ie10up'>
