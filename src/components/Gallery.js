@@ -41,7 +41,6 @@ const Gallery = ({tag}) => {
 
     return ( 
         <div className='container ie10up'>
-            {console.log('list', list)}
             { error && <div> The photos cannot be fetched :( { error } </div>}
             { isPending && <Loader /> }
             {list && list.map(photo => (
