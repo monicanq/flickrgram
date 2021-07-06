@@ -27,9 +27,12 @@ const Gallery = ({tag}) => {
         setPreTag(tag);
     }
     
+    // useEffect(()=>{
+    //     fetchData();      
+    // }, [data]);
     useEffect(()=>{
         fetchData();      
-    }, [data]);
+    },[data]);
     
     
     //Function for infinite scroll

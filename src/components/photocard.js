@@ -37,19 +37,21 @@ const PhotoCard = ({photo}) => {
                         <img src={ imgUrl } 
                             alt={image.title}/>
                     </div>
-                    <h2><span onClick={()=> window.open(image.url, "_blank")}>
-                            { image.title }
-                        </span> by <span onClick={()=> window.open(image.ownerurl, "_blank")}>
-                            { image.author }
-                        </span>
-                    </h2>
-                    {image.desc ? <p> Description: { image.desc }</p>
-                        : <p>This image does not have a description</p>}
-                    
-                    <div>Tags: { image.tags.map(tag => ( 
-                        <li className='tag' key={tag.id}><span>{ tag._content}</span> </li>
-                    ))
-                    }</div>
+                    <div className="info-wrap">
+                        <h2><span onClick={()=> window.open(image.url, "_blank")}>
+                                { image.title }
+                            </span> by <span onClick={()=> window.open(image.ownerurl, "_blank")}>
+                                { image.author }
+                            </span>
+                        </h2>
+                        {image.desc ? <p> Description: { image.desc }</p>
+                            : <p>This image does not have a description</p>}
+                        
+                        <div>Tags: { image.tags.map(tag => ( 
+                            <li className='tag' key={tag.id}><span>{ tag._content}</span> </li>
+                        ))
+                        }</div>
+                    </div>
                     
                 </div> 
             } 
