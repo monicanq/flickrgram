@@ -1,11 +1,14 @@
 import apiKey from '../config/flickrKeys';
 import useFetch from "../hooks/useFetch";
 import Loader from './Loader';
+import { useState } from 'react';
+import Modal from './Modal';
 
 const PhotoCard = ({photo}) => {
     // Fetch the info for each photo
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${apiKey}&photo_id=${photo.id}&format=json&nojsoncallback=1`;
     const { data, isPending } = useFetch(url);
+    const [modalShowing, setModalShowing] = useState(false);
 
     // Create an object with all the relevant information for each photo
     const image = {
@@ -33,7 +36,7 @@ const PhotoCard = ({photo}) => {
             { isPending && <Loader />}
             {data && 
                 <div>
-                    <div className="img-wrap">
+                    <div className="img-wrap" onClick={ () => setModalShowing(true) }>
                         <img src={ imgUrl } 
                             alt={image.title}/>
                     </div>
@@ -55,6 +58,7 @@ const PhotoCard = ({photo}) => {
                     
                 </div> 
             } 
+            <Modal modalShowing={ modalShowing } setModalShowing={ setModalShowing } imgUrl= { imgUrl } imgTitle={ image.title } />
         </div>
         );
 }

@@ -10,7 +10,6 @@ const useFetch = (url) =>  {
     useEffect(() => {
         //AbortController is not compatible with Internet explorer and it makes the app crash
         // const abortCont = new AbortController();
-        console.log('url changed', url);
         fetch(url)
             .then(res => {
                 if(!res.ok){

@@ -13,7 +13,7 @@ const Gallery = ({tag}) => {
 
     let url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${tag}&sort=relevance&safe_search=1&content_type=1&per_page=${numImages}&page=${page}&format=json&nojsoncallback=1`;
 
-    const { data, isPending, error } = useFetch(url, page);
+    const { data, isPending, error } = useFetch(url);
 
     useEffect(() => {
         setList([]);
