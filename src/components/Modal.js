@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const Modal = ({modalShowing, setModalShowing, imgUrl, imgTitle}) => {
 
     const handleClick = e => {
@@ -7,9 +9,14 @@ const Modal = ({modalShowing, setModalShowing, imgUrl, imgTitle}) => {
     if (!modalShowing) return null;
     else {
         return ( 
-            <div className='modal-wrapper' onClick={ e => handleClick(e) }>
+            <motion.div 
+                initial={{ opacity : 0 }}
+                animate={{ opacity : 1 }}
+                className='modal-wrapper' 
+                onClick={ e => handleClick(e) }
+                >
                 <img src={ imgUrl } alt= { imgTitle } />    
-            </div> 
+            </motion.div> 
         );
     }
 }

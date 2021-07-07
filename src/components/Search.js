@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
+
 const Search = ({ setTag }) => {
     const[search, setSearch] = useState('');
-    const handleSubmit = (e) =>{
+    const handleSubmit = e => {
         e.preventDefault();
         setTag(search);
         setSearch('');
@@ -10,17 +11,14 @@ const Search = ({ setTag }) => {
   
     return (
         <div className="search">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={ handleSubmit }>
                 <input 
                     type="text"
                     required
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={ search }
+                    onChange={e => setSearch(e.target.value)}
                 />
-                
-                <button>Search</button>
-                           
-                
+                <button>Search</button>           
             </form>
         </div>
     )
