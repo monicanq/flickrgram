@@ -5,22 +5,27 @@ import { useState } from 'react';
 import Modal from './Modal';
 import { motion } from 'framer-motion';
 
-const PhotoCard = ({ photo }) => {
+const PhotoCard = ({ id }) => {
     // Fetch the info for each photo
-    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${apiKey}&photo_id=${photo.id}&format=json&nojsoncallback=1`;
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${apiKey}&photo_id=${id}&format=json&nojsoncallback=1`;
     const { data, isPending } = useFetch(url);
     const [modalShowing, setModalShowing] = useState(false);
 
     // Create an object with all the relevant information for each photo
     const image = {
-        'id': photo.id,
-        'farm': photo.farm,
-        'title': photo.title,
-        'server': photo.server,
-        'secret': photo.secret
+        // 'id': photo.id,
+        // 'farm': photo.farm,
+        // 'title': photo.title,
+        // 'server': photo.server,
+        // 'secret': photo.secret
     };
     // Populate the rest of the fields when we get the data from the last fetch
     if (data) {
+        image.id = data.photo.id;
+        image.farm = data.photo.farm;
+        image.title = data.title_content;
+        image.server = data.photo.server;
+        image.secret = data.photo.secret;
         image.author = data.photo.owner.username;
         image.desc = data.photo.description._content;
         image.tags = data.photo.tags.tag;
@@ -31,10 +36,13 @@ const PhotoCard = ({ photo }) => {
     }
 
     const imgUrl =`https://farm${ image.farm }.staticflickr.com/${ image.server }/${ image.id }_${ image.secret }.jpg`;
-
+    
+    if (isPending) <Loader />
+    
     return (
+        
         <div className="photo-card">
-            { isPending && <Loader />}
+            {/* { isPending && <Loader />} */}
             {data && 
                 <motion.div
                     layout>
@@ -63,7 +71,7 @@ const PhotoCard = ({ photo }) => {
                     </div>
                     
                 </motion.div> 
-            } 
+             } 
             <Modal modalShowing={ modalShowing } setModalShowing={ setModalShowing } imgUrl= { imgUrl } imgTitle={ image.title } />
         </div>
         );

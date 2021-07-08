@@ -1,6 +1,6 @@
 import apiKey from '../config/flickrKeys';
 import useFetch from '../hooks/useFetch';
-import PhotoCard from "./photocard";
+import PhotoCard from "./Photocard";
 import Loader from "./Loader";
 import { useState, useEffect } from 'react';
 
@@ -26,6 +26,7 @@ const Gallery = ({ tag }) => {
             data.photos.photo.map(item => update.push(item))
         }
         setList(list => [...list, ...update])
+        console.log(data);
     }, [data])
     
     useEffect(() => {
@@ -45,7 +46,7 @@ const Gallery = ({ tag }) => {
             { error && <div> The photos cannot be fetched :( { error } </div>}
             { isPending && <Loader /> }
             {list && list.map(photo => (
-                <PhotoCard photo={ photo } key={ photo.id } />
+                <PhotoCard id={ photo.id } key={ photo.id } />
             )) }
         </div>
      );
