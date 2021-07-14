@@ -4,6 +4,7 @@ import Loader from './Loader';
 import { useState } from 'react';
 import Modal from './Modal';
 import { motion } from 'framer-motion';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const PhotoCard = ({ id }) => {
     // Fetch the info for each photo
@@ -47,12 +48,20 @@ const PhotoCard = ({ id }) => {
                 <motion.div
                     layout>
                     <div className="img-wrap" onClick={() => setModalShowing(true)}>
-                        <motion.img 
+                        {/* <motion.img 
                             whileHover={ {scale: 1.05} }
                             initial={{ opacity : 0 }}
                             animate={{ opacity : 1 }}
                             src={ imgUrl } 
+                            alt={image.title}/> */}
+                        <motion.div
+                            whileHover={ {scale: 1.05} }
+                            initial={{ opacity : 0 }}
+                            animate={{ opacity : 1 }}>
+                            <LazyLoadImage
+                            src={ imgUrl } 
                             alt={image.title}/>
+                        </motion.div>
                     </div>
                     <div className="info-wrap">
                         <h2><span onClick={() => window.open(image.url, "_blank")}>
@@ -78,3 +87,18 @@ const PhotoCard = ({ id }) => {
 }
 
 export default PhotoCard;
+
+
+
+ 
+// const MyImage = ({ image }) => (
+//   <div>
+//     <LazyLoadImage
+//       alt={image.alt}
+//       height={image.height}
+//       src={image.src} // use normal <img> attributes as props
+//       width={image.width} />
+//     <span>{image.caption}</span>
+//   </div>
+// );
+ 
