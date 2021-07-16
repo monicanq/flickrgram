@@ -48,12 +48,6 @@ const PhotoCard = ({ id }) => {
                 <motion.div
                     layout>
                     <div className="img-wrap" onClick={() => setModalShowing(true)}>
-                        {/* <motion.img 
-                            whileHover={ {scale: 1.05} }
-                            initial={{ opacity : 0 }}
-                            animate={{ opacity : 1 }}
-                            src={ imgUrl } 
-                            alt={image.title}/> */}
                         <motion.div
                             whileHover={ {scale: 1.05} }
                             initial={{ opacity : 0 }}
