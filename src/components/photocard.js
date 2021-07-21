@@ -13,18 +13,12 @@ const PhotoCard = ({ id }) => {
     const [modalShowing, setModalShowing] = useState(false);
 
     // Create an object with all the relevant information for each photo
-    const image = {
-        // 'id': photo.id,
-        // 'farm': photo.farm,
-        // 'title': photo.title,
-        // 'server': photo.server,
-        // 'secret': photo.secret
-    };
-    // Populate the rest of the fields when we get the data from the last fetch
+    const image = {};
+    // Populate the fields when we get the data from the last fetch
     if (data) {
         image.id = data.photo.id;
         image.farm = data.photo.farm;
-        image.title = data.title_content;
+        image.title = data.photo.title._content;
         image.server = data.photo.server;
         image.secret = data.photo.secret;
         image.author = data.photo.owner.username;
@@ -43,10 +37,10 @@ const PhotoCard = ({ id }) => {
     return (
         
         <div className="photo-card">
-            {/* { isPending && <Loader />} */}
             {data && 
                 <motion.div
-                    layout>
+                layout
+                data-testid='photoTest'>
                     <div className="img-wrap" onClick={() => setModalShowing(true)}>
                         <motion.div
                             whileHover={ {scale: 1.05} }
@@ -64,7 +58,7 @@ const PhotoCard = ({ id }) => {
                                 { image.author }
                             </span>
                         </h2>
-                        {image.desc ? <p> Description: { image.desc }</p>
+                        {image.desc ? <p className='desc'> Description: { image.desc }</p>
                             : <p>This image does not have a description</p>}
                         
                         <div>Tags: {image.tags.map(tag => ( 
@@ -82,17 +76,4 @@ const PhotoCard = ({ id }) => {
 
 export default PhotoCard;
 
-
-
- 
-// const MyImage = ({ image }) => (
-//   <div>
-//     <LazyLoadImage
-//       alt={image.alt}
-//       height={image.height}
-//       src={image.src} // use normal <img> attributes as props
-//       width={image.width} />
-//     <span>{image.caption}</span>
-//   </div>
-// );
  

@@ -15,6 +15,7 @@ const Search = ({ setTag }) => {
                 <input 
                     type="text"
                     required
+                    placeholder='Search...'
                     value={ search }
                     onChange={e => setSearch(e.target.value)}
                 />

@@ -1,6 +1,6 @@
 import apiKey from '../config/flickrKeys';
 import useFetch from '../hooks/useFetch';
-import PhotoCard from "./Photocard";
+import PhotoCard from "./PhotoCard";
 import Loader from "./Loader";
 import { useState, useEffect } from 'react';
 
@@ -26,7 +26,6 @@ const Gallery = ({ tag }) => {
             data.photos.photo.map(item => update.push(item))
         }
         setList(list => [...list, ...update])
-        console.log(data);
     }, [data])
     
     useEffect(() => {

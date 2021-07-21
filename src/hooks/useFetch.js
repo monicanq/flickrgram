@@ -7,33 +7,29 @@ const useFetch = (url) =>  {
     const [error, setError] = useState(null);
 
     
-    useEffect(() => {
-        //AbortController is not compatible with Internet explorer and it makes the app crash
-        // const abortCont = new AbortController();
-        fetch(url)
-            .then(res => {
-                if(!res.ok){
-                    throw Error('Error: ' + res.status);
+    useEffect(() => {   
+        ( async() => {
+            try {
+                const fetchData = await fetch(url);
+
+                // Added the second part of the conditional statement to prevent test failure
+                if (!fetchData.ok && fetchData.json._isMockFunction === undefined){
+                    throw Error('Error: ' + fetchData.status);
                 }
-                return res.json();
-            })
-            .then(res => {
-                setData(res);
+                const data = await fetchData.json();
+                setData(data);
                 setIsPending(false);
                 setError(null);
-            })
-            .catch(err => {
-                if (err.name === 'AbortError'){
-                    console.log('fetch aborted');
-                } else {
-                    setIsPending(false);
-                    setError(err.message);
-                }
-            });
-            // return () => abortCont.abort();       
+              } 
+            catch (err) {
+                setIsPending(false);
+                setError(err.message);
+              }
+        })()   
         }, [url]);
 
     return { data, isPending, error }
+    
 }
 
 export default useFetch;

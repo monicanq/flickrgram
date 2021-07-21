@@ -1,9 +1,8 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-import { screen } from "@testing-library/react";
+import { unmountComponentAtNode } from "react-dom";
+import { screen, act, render } from "@testing-library/react";
 
-import Header from "./components/Header";
+import Header from "../Header";
 
 let container = null;
 
@@ -20,7 +19,8 @@ afterEach(() => {
   container = null;
 });
 
-it("Header Component test", () => {
+
+it("Header Text test", () => {
   act(() => {
     render(<Header />, container);
   });
