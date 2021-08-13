@@ -23,10 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 #firebase
-.firebaserc
-firebase.json
 /.firebase
 /src/firebase
 
 #keys
-flickrKeys.js
+/src/config/flickrKeys.js
+/src/config/Keys.js
